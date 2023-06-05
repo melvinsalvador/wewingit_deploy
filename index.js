@@ -1,4 +1,5 @@
 import { Configuration, OpenAIApi } from 'openai'
+import { handler } from './netlify/functions/fetchAI/fetchAI'
 
 const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
@@ -23,20 +24,20 @@ document.addEventListener('submit', (e) => {
     chatbotConversation.scrollTop = chatbotConversation.scrollHeight
 }) 
 
-async function fetchReply(){
-    const response = await openai.createCompletion({
-        model: 'ft-personal-2023-06-04-20-11-59',
-        prompt: conversationStr,
-        presence_penalty: 0,
-        frequency_penalty: 0.3,
-        max_tokens: 100,
-        temperature: 0,
-        stop: ['\n', '->']
-    })
-    conversationStr += ` ${response.data.choices[0].text} \n`
-    renderTypewriterText(response.data.choices[0].text)
-    console.log(conversationStr)
-}
+// async function fetchReply(){
+//     const response = await openai.createCompletion({
+//         model: 'ft-personal-2023-06-04-20-11-59',
+//         prompt: conversationStr,
+//         presence_penalty: 0,
+//         frequency_penalty: 0.3,
+//         max_tokens: 100,
+//         temperature: 0,
+//         stop: ['\n', '->']
+//     })
+//     conversationStr += ` ${response.data.choices[0].text} \n`
+//     renderTypewriterText(response.data.choices[0].text)
+//     console.log(conversationStr)
+// }
 
 function renderTypewriterText(text) {
     const newSpeechBubble = document.createElement('div')
