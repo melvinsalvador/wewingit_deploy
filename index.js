@@ -1,12 +1,3 @@
-import { Configuration, OpenAIApi } from 'openai'
-import { handler } from './netlify/functions/fetchAI/fetchAI'
-
-const configuration = new Configuration({
-    apiKey: process.env.OPENAI_API_KEY,
-})
-
-const openai = new OpenAIApi(configuration)
-
 const chatbotConversation = document.getElementById('chatbot-conversation')
  
 let conversationStr = ''
@@ -24,20 +15,19 @@ document.addEventListener('submit', (e) => {
     chatbotConversation.scrollTop = chatbotConversation.scrollHeight
 }) 
 
-// async function fetchReply(){
-//     const response = await openai.createCompletion({
-//         model: 'ft-personal-2023-06-04-20-11-59',
-//         prompt: conversationStr,
-//         presence_penalty: 0,
-//         frequency_penalty: 0.3,
-//         max_tokens: 100,
-//         temperature: 0,
-//         stop: ['\n', '->']
-//     })
-//     conversationStr += ` ${response.data.choices[0].text} \n`
-//     renderTypewriterText(response.data.choices[0].text)
-//     console.log(conversationStr)
-// }
+async function fetchReply() {
+    const url = 'https://frabjous-kitten-84a58b.netlify.app//.netlify/functions/fetchAI'
+
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'content-type': 'text/plain',
+        },
+        body: conversationStr
+    })
+    const data = await response.json()
+    console.log(data)
+}
 
 function renderTypewriterText(text) {
     const newSpeechBubble = document.createElement('div')
