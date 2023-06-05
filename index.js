@@ -18,7 +18,7 @@ document.addEventListener('submit', (e) => {
 async function fetchReply() {
     const url = 'https://frabjous-kitten-84a58b.netlify.app//.netlify/functions/fetchAI'
 
-    const response = await fetch(url, {
+    const response = await fetch(url, { 
         method: 'POST',
         headers: {
             'content-type': 'text/plain',
